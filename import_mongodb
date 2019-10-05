@@ -1,0 +1,27 @@
+import pymongo
+import json
+import os
+import time
+
+# 建立與mongodb的連線 
+client = pymongo.MongoClient(host='localhost', port=27017)  #mongodb位址
+db = client.crawler_104  #指定db
+collection = db.jobs_info  #指定collection
+
+# 選擇檔案資料夾
+mydir = <資料夾路徑>
+
+# 將資料夾內的檔案名稱建成一個list
+file_list = os.listdir(mydir)
+
+# 依序將檔案匯入mongodb
+for file in file_list:
+    jsonfile = mydir + r'\\' + file
+    if os.path.isfile(jsonfile):
+        with open(jsonfile) as f:
+            data = json.load(f)
+            # 若檔案內只有一個json:insert_one，如有多個json:insert_all
+            collection.insert_one(data)
+            print(file,'complete')
+    else:
+        print('not file')
