@@ -1,2 +1,2 @@
-# pymongo_input_jsons
+# pymongo_iport_jsons
 Import json files to Mongodb from specific folder.
